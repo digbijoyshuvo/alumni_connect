@@ -1,43 +1,53 @@
 import 'package:flutter/material.dart';
 
-import '../theme/app_color.dart';
-
-class RoundedElevatedButton extends StatelessWidget{
+class RoundedElevatedButton extends StatelessWidget {
   const RoundedElevatedButton({
     super.key,
     required this.buttonText,
     required this.onPressed,
-    this.color=AppColor.appColor,
   });
+
   final String buttonText;
   final Function()? onPressed;
-  final Color color;
+
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      // buttonText: buttonText,
-      onPressed: onPressed,
-      style : ButtonStyle(
-        backgroundColor: WidgetStatePropertyAll(color),
-        elevation: const WidgetStatePropertyAll(0),
-        shape: const WidgetStatePropertyAll(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(8),
-            ),
+    return Container(
+      width: double.infinity,
+      height: 48,
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [Color(0xFFA8E063), Color(0xFF56AB2F)], // Light green gradient
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.greenAccent.withOpacity(0.4),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
           ),
         ),
-        fixedSize: WidgetStatePropertyAll(
-          Size(
-            MediaQuery.sizeOf(context).width,45,
-          ),
-        ),),
-      child:Text(
-        buttonText,
-        style: const TextStyle(
-            color: AppColor.whiteColor,
+        child: Text(
+          buttonText,
+          style: const TextStyle(
+            color: Colors.black,
             fontWeight: FontWeight.w600,
-            fontSize: 16),
+            fontSize: 16,
+          ),
+        ),
       ),
     );
   }

@@ -1,11 +1,14 @@
 import 'package:alumni_connect/features/auth/login_view.dart';
 import 'package:alumni_connect/features/auth/register_view.dart';
 import 'package:alumni_connect/features/homepage/home_page.dart';
+import 'package:alumni_connect/features/homepagefeatures/alumnimanagementsection/create_alumni_account.dart';
+import 'package:alumni_connect/features/homepagefeatures/alumnimanagementsection/update_alumni_page.dart';
 import 'package:alumni_connect/features/homepagefeatures/eventPage/check_permission.dart';
 import 'package:alumni_connect/features/homepagefeatures/eventPage/create_event.dart';
 import 'package:alumni_connect/features/homepagefeatures/profile_page.dart';
 import 'package:alumni_connect/features/homepagefeatures/tuitionpage/add_tution.dart';
 import 'package:alumni_connect/features/homepagefeatures/tuitionpage/edit_tuition.dart';
+import 'package:alumni_connect/features/homepagefeatures/tuitionpage/tution_page.dart';
 import 'package:alumni_connect/features/landing/landing_page.dart';
 import 'package:alumni_connect/routes/route_names.dart';
 import 'package:go_router/go_router.dart';
@@ -71,6 +74,21 @@ final GoRouter router = GoRouter(routes: [
         name:RouteNames.createEvent,
         path: "/createEvent",
         builder: (context,state) => const CreateEvent(),
+    ),
+    GoRoute(
+        name:RouteNames.createAlumni,
+        path: "/createAlumni",
+        builder: (context,state) => const JoinOurCommunity(),
+    ),
+    GoRoute(
+        name:RouteNames.updateAlumni,
+        path: "/updateAlumni",
+        builder: (context,state) => const UpdateAlumniPage(),
+    ),
+    GoRoute(
+        name:RouteNames.tuitionPage,
+        path: "/tuitionPage",
+        builder: (context,state) => const TuitionPage(),
     ),
 
 ]);

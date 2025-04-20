@@ -3,7 +3,6 @@ import 'package:appwrite/models.dart';
 import 'package:flutter/material.dart';
 
 import '../../../data/database/user_information.dart';
-import 'alumni_container.dart';
 
 class UpdateAlumniPage extends StatefulWidget {
   const UpdateAlumniPage({super.key});
@@ -33,11 +32,48 @@ class _UpdateAlumniPageState extends State<UpdateAlumniPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final paddingValue = size.width * 0.05; // Responsive padding
+    final paddingValue = size.width * 0.05;
 
     return Scaffold(
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
+          : createdAlumniInfo.isEmpty
+          ? Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.info_outline, size: 60, color: Colors.redAccent),
+              const SizedBox(height: 20),
+              const Text(
+                "No alumni information found.",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600,color: Colors.redAccent),
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                "Please create your profile to appear here.",
+                style: TextStyle(fontSize: 16, color: Colors.lightGreen),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 30),
+              ElevatedButton.icon(
+                onPressed: () => Navigator.pop(context),
+                icon: const Icon(Icons.arrow_back),
+                label: const Text("Go Back"),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFB71C1C),
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      )
           : CustomScrollView(
         slivers: [
           SliverList(
@@ -106,4 +142,5 @@ class _UpdateAlumniPageState extends State<UpdateAlumniPage> {
       ),
     );
   }
+
 }

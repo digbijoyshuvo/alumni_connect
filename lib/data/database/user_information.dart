@@ -1,6 +1,4 @@
 
-import 'dart:io';
-
 import 'package:alumni_connect/data/saved_data.dart';
 import 'package:appwrite/appwrite.dart';
 
@@ -11,7 +9,7 @@ String userCollectionId = "67dd3547003348744b28";
 
 final Databases databases = Databases(client);
 
-// A function to Store the User Data in Appwrite Database
+// A function to Store the User Data in AppWrite Database
 
 Future <void> saveUserData(String name, String email, String userId)async{
   return await databases.createDocument(

@@ -11,5 +11,6 @@ static const updateAlumni = "updateAlumni";
 static const editTuition = "editTuition";
 static const checkPermission = "checkPermission";
 static const createEvent = "createEvent";
+static const tuitionPage = "tuitionPage";
 
 }

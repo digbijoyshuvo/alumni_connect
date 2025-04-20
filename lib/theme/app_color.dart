@@ -6,7 +6,7 @@ class AppColor{
   static const Color appBarColor =Color(0x73000000);
   // Color(0xff1E2745);
 
-  static const Color appColor = Colors.lightGreen;
+  static const Color appColor = Color(0xFF7CB342);
   static const Color borderColor = Color.fromRGBO(52, 51, 67, 1);
   static const Color whiteColor = Colors.white;
   static const Color greyColor= Colors.grey;

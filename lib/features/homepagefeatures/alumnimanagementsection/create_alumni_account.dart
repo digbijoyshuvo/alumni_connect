@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:alumni_connect/data/database/user_information.dart';
 import 'package:alumni_connect/data/saved_data.dart';
 import 'package:alumni_connect/routes/route_names.dart';
-import 'package:alumni_connect/theme/app_color.dart';
 import 'package:alumni_connect/utils/app_string.dart';
 import 'package:alumni_connect/widgets/custom_snackbar.dart';
 import 'package:alumni_connect/widgets/custom_text_form_field.dart';
@@ -14,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../data/auth/auth.dart';
-import '../../homepage/home_page.dart';
 
 class  JoinOurCommunity extends StatefulWidget {
   const JoinOurCommunity({super.key});
@@ -24,12 +22,6 @@ class  JoinOurCommunity extends StatefulWidget {
 }
 
 class _JoinOurCommunityState extends State<JoinOurCommunity> {
-  void joinPage(BuildContext context) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => HomePage()),
-    );
-  }
 
   String userId = "";
   FilePickerResult? _filePickerResult;
@@ -38,7 +30,6 @@ class _JoinOurCommunityState extends State<JoinOurCommunity> {
   final TextEditingController _departmentController = TextEditingController();
   final TextEditingController _seriesController = TextEditingController();
   final TextEditingController _workplaceController = TextEditingController();
-  final TextEditingController _companyController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
   final TextEditingController _facebookController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -104,7 +95,7 @@ class _JoinOurCommunityState extends State<JoinOurCommunity> {
             child: Column(
               children: [
                 Text(
-                  "Please Provide the following Information",
+                  "Please Provide the following Information to Join Our Alumni Community",
                   style: TextStyle(
                     color: Colors.greenAccent,
                     fontSize: 26,
@@ -117,9 +108,24 @@ class _JoinOurCommunityState extends State<JoinOurCommunity> {
                   onTap:()=> _openFilePicker(),
                   child: Container(width: double.infinity,height: MediaQuery.of(context).size.height*.25,
                     decoration: BoxDecoration(
-                        color:AppColor.appColor,
-                        borderRadius: BorderRadius.circular(8)
+                      gradient: const LinearGradient(
+                        colors: [
+                          Color(0xFF3D348B), // Deep violet (like AppColor.appColor)
+                          Color(0xFF845EC2), // Soft purple for blend
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 6,
+                          offset: Offset(0, 4),
+                        ),
+                      ],
                     ),
+
                     child: _filePickerResult !=null ?
                     ClipRRect(
                       borderRadius: BorderRadius.circular(8),

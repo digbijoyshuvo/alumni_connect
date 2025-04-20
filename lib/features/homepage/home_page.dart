@@ -1,17 +1,14 @@
-
-import 'package:alumni_connect/features/homepagefeatures/alumnimanagementsection/create_alumni_account.dart';
-import 'package:alumni_connect/theme/app_color.dart';
-import 'package:appwrite/models.dart';
+import 'package:alumni_connect/features/homepagefeatures/alumnimanagementsection/alumni_directory.dart';
+import 'package:alumni_connect/features/homepagefeatures/alumnimanagementsection/alumni_info.dart';
+import 'package:alumni_connect/utils/app_image_url.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import '../../data/database/user_information.dart';
 import '../../routes/route_names.dart';
 import '../homepagefeatures/about_us.dart';
-import '../homepagefeatures/alumnimanagementsection/alumni_directory.dart';
-import '../homepagefeatures/alumnimanagementsection/update_alumni_page.dart';
 import '../homepagefeatures/eventPage/event_page.dart';
-import '../homepagefeatures/students_community.dart';
-import '../homepagefeatures/tuitionpage/tution_page.dart';
+import '../homepagefeatures/studentCommunity/students_community.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -39,65 +36,155 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF121212),
       body: SafeArea(
         child: Column(
           children: [
-            // SizedBox(height: 30,),
+            // 🔥 Custom Title Section
             Container(
-              height: 120.0,
               width: double.infinity,
-              color: AppColor.appBarColor,
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Color(0xFF3E1E68), Color(0xFF222222)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black45,
+                    offset: Offset(0, 4),
+                    blurRadius: 10,
+                  ),
+                ],
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25.0),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center, // Center the Row horizontally
-                crossAxisAlignment: CrossAxisAlignment.center, // Center the Row vertically
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Title Section
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center, // Center the Column vertically
-                    crossAxisAlignment: CrossAxisAlignment.center, // Center the Column horizontally
+                  Row(
                     children: [
-                      Text(
-                        "Rajshahi University Of Engineering",
-                        style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        "and Technology, Rajshahi",
-                        style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        "Alumni and Students Community", // Second line
-                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      Image.asset(AppImageUrl.logo, height: 50, width: 50),
+                      const SizedBox(width: 12),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text(
+                            "Rajshahi University of",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            "Engineering & Technology",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Text(
+                            "Alumni & Students Community",
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: 13.5,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                  // Add some spacing between the title and the profile icon
-                  SizedBox(width: 30), // Adjust the spacing as needed
-                  // Profile Icon with PopupMenuButton
                   GestureDetector(
-                    onTap: ()=> context.pushNamed(RouteNames.profile),
-                      child: Icon(
-                          Icons.person)),
+                    onTap: () => context.pushNamed(RouteNames.profile),
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.3),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.person,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
-            // Body Content
+
+            const SizedBox(height: 30),
+
+            // 🟦 Updated Grid Section with Find Alumni double size
             Expanded(
               child: Padding(
-                padding: EdgeInsets.all(16.0),
-                child: GridView.count(
-                  crossAxisCount: 2, // 2 columns
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                child: StaggeredGrid.count(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 20,
+                  crossAxisSpacing: 20,
                   children: [
-                    _buildContainer(context, "Alumni Directory", Colors.blue, AlumniDirectory()),
-                    _buildContainer(context, "  Students\nCommunity", Colors.pink, StudentsCommunity()),
-                    _buildContainer(context, "Events", Colors.orange, EventsPage()),
-                    _buildContainer(context, "Tuition Offers", Colors.red, TuitionPage()),
-                    _buildContainer(context, "About US", Colors.cyan, AboutUs()),
-                   hasAccount ? _buildContainer(context, "Update Your\nInformation", Colors.purple,
-                   UpdateAlumniPage()):
-                    _buildContainer(context, "  Join Our\nCommunity", Colors.purple, JoinOurCommunity(),shouldRefresh: true),
+                    StaggeredGridTile.count(
+                      crossAxisCellCount: 1,
+                      mainAxisCellCount: 1,
+                      child: _buildContainer(
+                        context,
+                        "Alumni Directory",
+                        Colors.deepPurpleAccent,
+                        AlumniDirectory(),
+                        icon: Icons.school,
+                      ),
+                    ),
+                    StaggeredGridTile.count(
+                      crossAxisCellCount: 1,
+                      mainAxisCellCount: 1,
+                      child: _buildContainer(
+                        context,
+                        "Students\nCommunity",
+                        Colors.teal,
+                        StudentsCommunity(),
+                        icon: Icons.group,
+                      ),
+                    ),
+                    StaggeredGridTile.count(
+                      crossAxisCellCount: 1,
+                      mainAxisCellCount: 1,
+                      child: _buildContainer(
+                        context,
+                        "Upcoming Events",
+                        Colors.orangeAccent,
+                        EventsPage(),
+                        icon: Icons.event,
+                      ),
+                    ),
+                    StaggeredGridTile.count(
+                      crossAxisCellCount: 1,
+                      mainAxisCellCount: 1,
+                      child: _buildContainer(
+                        context,
+                        "About Us",
+                        Colors.blueGrey,
+                        AboutUs(),
+                        icon: Icons.info_outline,
+                      ),
+                    ),
+                    // ✅ Find Alumni (takes 2 columns)
+                    StaggeredGridTile.count(
+                      crossAxisCellCount: 2,
+                      mainAxisCellCount: 1,
+                      child: _buildContainer(
+                        context,
+                        "See All Alumni List",
+                        Colors.pinkAccent,
+                        AlumniInfo(),
+                        icon: Icons.search,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -108,45 +195,65 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildContainer(BuildContext context, String title, Color color, Widget page,
-  {bool shouldRefresh = false,
-  }) {
+  Widget _buildContainer(
+      BuildContext context,
+      String title,
+      Color color,
+      Widget page, {
+        bool shouldRefresh = false,
+        IconData? icon,
+      }) {
     return GestureDetector(
-      onTap: () async{
-       await Navigator.push(
+      onTap: () async {
+        await Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => page),
         );
-       if(shouldRefresh){
-         checkUserStatus();
-       }
+        if (shouldRefresh) {
+          checkUserStatus();
+        }
       },
       child: Container(
         decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(12),
+          gradient: title == "See All Alumni List"
+              ? const LinearGradient(
+            colors: [Color(0xFFff6a00), Color(0xFFee0979)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          )
+              : null,
+          color: title == "See All Alumni List" ? null : color.withOpacity(0.9),
+          borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.black45,
-              blurRadius: 5,
-              spreadRadius: 5,
-              offset: Offset(2, 2),
+              color: color.withOpacity(0.4),
+              blurRadius: 8,
+              offset: const Offset(3, 3),
             ),
           ],
         ),
-        child: Center(
-          child: Text(
-            title,
-            style: TextStyle(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              icon ?? Icons.star,
               color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+              size: 38,
             ),
-          ),
+            const SizedBox(height: 12),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 16.5,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
-
-// Replace with your actual profile page widget
