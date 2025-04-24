@@ -178,4 +178,20 @@ Future<void> updateAlumni(
   }
  }
 
+//  search by a specific attribute in the database
+Future searchLocationResult(
+    String location,
+    )async{
+  try{
+    final data = await databases.listDocuments(
+      databaseId: databaseId,
+      collectionId: "67df20c40034e8b0a9f5",
+      queries: [
+        Query.startsWith("location", location),
+      ],);
+    return data.documents;
+  }catch(ex){
+    print(ex);
+  }
+}
 

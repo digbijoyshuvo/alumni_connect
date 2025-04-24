@@ -6,6 +6,8 @@ import 'package:alumni_connect/features/homepagefeatures/alumnimanagementsection
 import 'package:alumni_connect/features/homepagefeatures/eventPage/check_permission.dart';
 import 'package:alumni_connect/features/homepagefeatures/eventPage/create_event.dart';
 import 'package:alumni_connect/features/homepagefeatures/profile_page.dart';
+import 'package:alumni_connect/features/homepagefeatures/searchingAlumni/search_alumni.dart';
+import 'package:alumni_connect/features/homepagefeatures/searchingAlumni/search_alumni_result.dart';
 import 'package:alumni_connect/features/homepagefeatures/tuitionpage/add_tution.dart';
 import 'package:alumni_connect/features/homepagefeatures/tuitionpage/edit_tuition.dart';
 import 'package:alumni_connect/features/homepagefeatures/tuitionpage/tution_page.dart';
@@ -89,6 +91,11 @@ final GoRouter router = GoRouter(routes: [
         name:RouteNames.tuitionPage,
         path: "/tuitionPage",
         builder: (context,state) => const TuitionPage(),
+    ),
+    GoRoute(
+        name:RouteNames.searchAlumni,
+        path: "/searchAlumni",
+        builder: (context,state) => const SearchLocationPage(),
     ),
 
 ]);

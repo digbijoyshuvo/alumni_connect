@@ -93,7 +93,7 @@ class LandingPage extends StatelessWidget {
                         ),
                         child: ElevatedButton(
                           onPressed: () {
-                            context.pushNamed(RouteNames.checkSession);
+                            context.pushReplacementNamed(RouteNames.checkSession);
                           },
                           style: ElevatedButton.styleFrom(
                             elevation: 0,

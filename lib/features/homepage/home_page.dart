@@ -37,31 +37,32 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF121212),
-      body: SafeArea(
-        child: Column(
-          children: [
-            // 🔥 Custom Title Section
-            Container(
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Color(0xFF3E1E68), Color(0xFF222222)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(30),
-                  bottomRight: Radius.circular(30),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black45,
-                    offset: Offset(0, 4),
-                    blurRadius: 10,
-                  ),
-                ],
+      body: Column(
+        children: [
+          // 🔥 Custom Title Section
+          Container(
+            width: double.infinity,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Color(0xFF3E1E68), Color(0xFF222222)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ),
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25.0),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(30),
+                bottomRight: Radius.circular(30),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black45,
+                  offset: Offset(0, 4),
+                  blurRadius: 10,
+                ),
+              ],
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 25.0),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -117,80 +118,80 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
+          ),
 
-            const SizedBox(height: 30),
+          const SizedBox(height: 30),
 
-            // 🟦 Updated Grid Section with Find Alumni double size
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-                child: StaggeredGrid.count(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 20,
-                  crossAxisSpacing: 20,
-                  children: [
-                    StaggeredGridTile.count(
-                      crossAxisCellCount: 1,
-                      mainAxisCellCount: 1,
-                      child: _buildContainer(
-                        context,
-                        "Alumni Directory",
-                        Colors.deepPurpleAccent,
-                        AlumniDirectory(),
-                        icon: Icons.school,
-                      ),
+          // 🟦 Updated Grid Section with Find Alumni double size
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+              child: StaggeredGrid.count(
+                crossAxisCount: 2,
+                mainAxisSpacing: 20,
+                crossAxisSpacing: 20,
+                children: [
+                  StaggeredGridTile.count(
+                    crossAxisCellCount: 1,
+                    mainAxisCellCount: 1,
+                    child: _buildContainer(
+                      context,
+                      "Alumni Directory",
+                      Colors.deepPurpleAccent,
+                      AlumniDirectory(),
+                      icon: Icons.school,
                     ),
-                    StaggeredGridTile.count(
-                      crossAxisCellCount: 1,
-                      mainAxisCellCount: 1,
-                      child: _buildContainer(
-                        context,
-                        "Students\nCommunity",
-                        Colors.teal,
-                        StudentsCommunity(),
-                        icon: Icons.group,
-                      ),
+                  ),
+                  StaggeredGridTile.count(
+                    crossAxisCellCount: 1,
+                    mainAxisCellCount: 1,
+                    child: _buildContainer(
+                      context,
+                      "Students\nCommunity",
+                      Colors.teal,
+                      StudentsCommunity(),
+                      icon: Icons.group,
                     ),
-                    StaggeredGridTile.count(
-                      crossAxisCellCount: 1,
-                      mainAxisCellCount: 1,
-                      child: _buildContainer(
-                        context,
-                        "Upcoming Events",
-                        Colors.orangeAccent,
-                        EventsPage(),
-                        icon: Icons.event,
-                      ),
+                  ),
+                  StaggeredGridTile.count(
+                    crossAxisCellCount: 1,
+                    mainAxisCellCount: 1,
+                    child: _buildContainer(
+                      context,
+                      "Upcoming Events",
+                      Colors.orangeAccent,
+                      EventsPage(),
+                      icon: Icons.event,
                     ),
-                    StaggeredGridTile.count(
-                      crossAxisCellCount: 1,
-                      mainAxisCellCount: 1,
-                      child: _buildContainer(
-                        context,
-                        "About Us",
-                        Colors.blueGrey,
-                        AboutUs(),
-                        icon: Icons.info_outline,
-                      ),
+                  ),
+                  StaggeredGridTile.count(
+                    crossAxisCellCount: 1,
+                    mainAxisCellCount: 1,
+                    child: _buildContainer(
+                      context,
+                      "About Us",
+                      Colors.blueGrey,
+                      AboutUs(),
+                      icon: Icons.info_outline,
                     ),
-                    // ✅ Find Alumni (takes 2 columns)
-                    StaggeredGridTile.count(
-                      crossAxisCellCount: 2,
-                      mainAxisCellCount: 1,
-                      child: _buildContainer(
-                        context,
-                        "See All Alumni List",
-                        Colors.pinkAccent,
-                        AlumniInfo(),
-                        icon: Icons.search,
-                      ),
+                  ),
+                  // ✅ Find Alumni (takes 2 columns)
+                  StaggeredGridTile.count(
+                    crossAxisCellCount: 2,
+                    mainAxisCellCount: 1,
+                    child: _buildContainer(
+                      context,
+                      "See All Alumni",
+                      Colors.pinkAccent,
+                      AlumniInfo(),
+                      icon: Icons.search,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -215,14 +216,14 @@ class _HomePageState extends State<HomePage> {
       },
       child: Container(
         decoration: BoxDecoration(
-          gradient: title == "See All Alumni List"
+          gradient: title == "See All Alumni"
               ? const LinearGradient(
             colors: [Color(0xFFff6a00), Color(0xFFee0979)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           )
               : null,
-          color: title == "See All Alumni List" ? null : color.withOpacity(0.9),
+          color: title == "See All Alumni" ? null : color.withOpacity(0.9),
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(

@@ -21,6 +21,7 @@ class _AddTuitionState extends State<AddTuition> {
  final TextEditingController _subjectEditingController = TextEditingController();
  final TextEditingController _salaryEditingController = TextEditingController();
  final TextEditingController _locationEditingController = TextEditingController();
+  final TextEditingController _contactInfoController = TextEditingController();
 
   @override
   void initState(){
@@ -34,7 +35,7 @@ class _AddTuitionState extends State<AddTuition> {
    _salaryEditingController.dispose();
    _subjectEditingController.dispose();
    _locationEditingController.dispose();
-
+   _contactInfoController.dispose();
   super.dispose();
  }
 
@@ -45,6 +46,7 @@ class _AddTuitionState extends State<AddTuition> {
    _salaryEditingController.clear();
    _subjectEditingController.clear();
     _locationEditingController.clear();
+    _contactInfoController.clear();
  }
 
   @override
@@ -119,6 +121,20 @@ class _AddTuitionState extends State<AddTuition> {
                   prefixIcon: null),
               SizedBox(height: 10,),
               CustomTextFormField(
+                  controller: _contactInfoController,
+                  validator: (val){
+                    if(val!.isEmpty){
+                      return AppString.required;
+                    }
+                    return null;
+                  },
+                  keyboardType: TextInputType.text,
+                  obscureText: false,
+                  suffix: null,
+                  hintText: "Enter Email/Phone No.",
+                  prefixIcon: null),
+              SizedBox(height: 10,),
+              CustomTextFormField(
                   controller: _descriptionEditingController,
                   validator: (val){
                     if(val!.isEmpty){
@@ -144,7 +160,9 @@ class _AddTuitionState extends State<AddTuition> {
                       _subjectEditingController.text,
                       _salaryEditingController.text,
                       _descriptionEditingController.text,
-                        _locationEditingController.text,userId).then((value) =>
+                        _locationEditingController.text,
+                      _contactInfoController.text,
+                      userId).then((value) =>
                       CustomSnackBar.showSuccess(context, "Tuition Offer Added"));
                   Navigator.pop(context);
                 }

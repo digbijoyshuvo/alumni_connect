@@ -54,16 +54,32 @@ class _AlumniDirectoryState extends State<AlumniDirectory> {
                 ),
               ],
             ),
-            child: const Center(
-              child: Text(
-                "Alumni Directory",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  letterSpacing: 1.2,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox( width: 8,),
+                IconButton(
+                    onPressed: (){
+                      Navigator.pop(context);
+                    },
+                    icon:Icon(Icons.arrow_back),
                 ),
-              ),
+                Expanded(
+                  child: Center(
+                    child: Text(
+                     "Alumni Directory",
+                     style: TextStyle(
+                       fontSize: 24,
+                       fontWeight: FontWeight.bold,
+                       color: Colors.white,
+                       letterSpacing: 1.2,
+                     ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 45,),
+              ],
             ),
           ),
 

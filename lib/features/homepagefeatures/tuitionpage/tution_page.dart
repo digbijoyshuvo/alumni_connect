@@ -62,17 +62,34 @@ class _TuitionPageState extends State<TuitionPage> {
                 ),
               ],
             ),
-            child: const Center(
-              child: Text(
-                "Available Tuition's",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  letterSpacing: 1.2,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(width: 8,),
+                IconButton(
+                  icon: const Icon(Icons.arrow_back, color: Colors.white),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
-              ),
+                const Expanded(
+                  child: Center(
+                    child: Text(
+                      "Available Tuition's",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 30),
+              ],
             ),
+
           ),
           SizedBox(height: 20,),
           // Tuition List
@@ -133,6 +150,14 @@ class _TuitionPageState extends State<TuitionPage> {
                                 ),
                                 Text(
                                   "Salary : ${tuition[index].data["salary"]}",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16,
+                                    color: Colors.orangeAccent,
+                                  ),
+                                ),
+                                Text(
+                                  "Contact : ${tuition[index].data["contactInfo"]}",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 16,

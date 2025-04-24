@@ -57,17 +57,37 @@ class _EditTuitionState extends State<EditTuition> {
                 ),
               ],
             ),
-            child: const Center(
-              child: Text(
-                "Edit Your Tuition Offers",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  letterSpacing: 1.2,
-                ),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(width: 8,),
+                  IconButton(
+                    icon: const Icon(Icons.arrow_back, color: Colors.white),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  const Expanded(
+                    child: Center(
+                      child: Text(
+                        "Edit Your Tuition Offers",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 30), // Match IconButton width for symmetry
+                ],
               ),
             ),
+
           ),
 
           // Tuition Edit List
@@ -105,7 +125,7 @@ class _EditTuitionState extends State<EditTuition> {
                     subtitle: Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: Text(
-                        "Location : ${editTuition[index].data["location"]}\nSalary : ${editTuition[index].data["salary"]}",
+                        "Location : ${editTuition[index].data["location"]}\nSalary : ${editTuition[index].data["salary"]}\nContact : ${editTuition[index].data["contactInfo"]}",
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.grey[300],
@@ -123,6 +143,7 @@ class _EditTuitionState extends State<EditTuition> {
                               location: editTuition[index].data["location"],
                               salary: editTuition[index].data["salary"],
                               extraInfo: editTuition[index].data["extra_info"],
+                              contactInfo: editTuition[index].data["contactInfo"],
                               docId: editTuition[index].$id,
                             ),
                           ),

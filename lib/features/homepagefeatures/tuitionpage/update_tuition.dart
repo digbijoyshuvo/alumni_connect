@@ -10,8 +10,8 @@ import 'package:go_router/go_router.dart';
 import '../../../data/saved_data.dart';
 
 class UpdateTuition extends StatefulWidget {
-  final String Class,subjects,location,salary,extraInfo,docId;
-  const UpdateTuition({super.key, required this.Class, required this.subjects, required this.location, required this.salary, required this.extraInfo, required this.docId});
+  final String Class,subjects,location,salary,contactInfo,extraInfo,docId;
+  const UpdateTuition({super.key, required this.Class, required this.subjects, required this.location, required this.salary, required this.extraInfo, required this.docId, required this.contactInfo});
 
   @override
   State<UpdateTuition> createState() => _UpdateTuitionState();
@@ -24,6 +24,7 @@ class _UpdateTuitionState extends State<UpdateTuition> {
   final TextEditingController _subjectEditingController = TextEditingController();
   final TextEditingController _salaryEditingController = TextEditingController();
   final TextEditingController _locationEditingController = TextEditingController();
+  final TextEditingController _contactInfoController = TextEditingController();
 
   @override
   void initState(){
@@ -33,6 +34,7 @@ class _UpdateTuitionState extends State<UpdateTuition> {
     _subjectEditingController.text = widget.subjects;
     _locationEditingController.text = widget.location;
     _salaryEditingController.text = widget.salary;
+    _contactInfoController.text = widget.contactInfo;
     _descriptionEditingController.text = widget.extraInfo;
 
   }
@@ -43,7 +45,7 @@ class _UpdateTuitionState extends State<UpdateTuition> {
     _salaryEditingController.dispose();
     _subjectEditingController.dispose();
     _locationEditingController.dispose();
-
+    _contactInfoController.dispose();
     super.dispose();
   }
 
@@ -123,6 +125,20 @@ class _UpdateTuitionState extends State<UpdateTuition> {
                   prefixIcon: null),
               SizedBox(height: 13,),
               CustomTextFormField(
+                  controller: _contactInfoController,
+                  validator: (val){
+                    if(val!.isEmpty){
+                      return AppString.required;
+                    }
+                    return null;
+                  }, keyboardType: TextInputType.text,
+                  obscureText: false,
+                  suffix: null,
+                  hintText: "Enter Email/Phone No.",
+                  labelText: "Enter Email/Phone No.",
+                  prefixIcon: null),
+              SizedBox(height: 13,),
+              CustomTextFormField(
                   controller: _descriptionEditingController,
                   validator: (val){
                     if(val!.isEmpty){
@@ -142,15 +158,16 @@ class _UpdateTuitionState extends State<UpdateTuition> {
                   onPressed: (){
                     if(_classEditingController.text=="" ||_descriptionEditingController.text==""||
                         _salaryEditingController.text==""|| _subjectEditingController.text=="" ||
-                        _locationEditingController.text==""){
+                        _locationEditingController.text==""||_contactInfoController.text==""){
                       CustomSnackBar.showError(context, AppString.required);
                     }else {
                       updateTuition(_classEditingController.text,
                           _subjectEditingController.text,
                           _salaryEditingController.text,
                           _descriptionEditingController.text,
-                          _locationEditingController.text,userId,
-                      widget.docId).then((value) =>
+                          _locationEditingController.text,
+                          _contactInfoController.text,
+                          userId, widget.docId).then((value) =>
                           CustomSnackBar.showSuccess(context, "Updated Tuition Offer"));
                       context.pushNamed(RouteNames.homepage);
                     }

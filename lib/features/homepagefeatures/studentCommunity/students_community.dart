@@ -33,16 +33,32 @@ class StudentsCommunity extends StatelessWidget {
                 ),
               ],
             ),
-            child: const Center(
-              child: Text(
-                "Students Community",
-                style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  letterSpacing: 1.3,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(width: 8,),
+                IconButton(
+                  icon: const Icon(Icons.arrow_back, color: Colors.white),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
-              ),
+                const Expanded(
+                  child: Center(
+                    child: Text(
+                      "Students Community",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 25), // Match IconButton width for symmetry
+              ],
             ),
           ),
 
@@ -60,7 +76,7 @@ class StudentsCommunity extends StatelessWidget {
                     color: const Color(0xFF6A11CB),
                     icon: Icons.people,
                     onTap: () {
-                      // Handle navigation
+                    context.pushNamed(RouteNames.searchAlumni);
                     },
                   ),
                   _CommunityButton(

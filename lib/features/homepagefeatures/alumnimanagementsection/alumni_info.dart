@@ -52,7 +52,7 @@ class _AlumniInfoState extends State<AlumniInfo> {
           ),
           child: AppBar(
             title: const Text(
-              "Alumni Directory",
+              "Alumni Details",
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 22,

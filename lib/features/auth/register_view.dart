@@ -141,7 +141,7 @@ class _RegisterViewState extends State<RegisterView>{
                               then((value){
                              if(value=="success"){
                             CustomSnackBar.showSuccess(context, "Account Created");
-                            context.pushNamed(RouteNames.login);
+                            context.pushReplacementNamed(RouteNames.login);
                              }
                              else{
                                CustomSnackBar.showError(context, value);

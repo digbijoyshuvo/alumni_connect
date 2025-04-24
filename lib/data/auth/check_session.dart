@@ -16,10 +16,10 @@ class _CheckSessionState extends State<CheckSession> {
   void initState(){
     ckeckSessions().then((value){
       if(value){
-        context.pushNamed(RouteNames.homepage);
+        context.pushReplacementNamed(RouteNames.homepage);
       }
       else{
-        context.pushNamed(RouteNames.login);
+        context.pushReplacementNamed(RouteNames.login);
       }
     });
   }

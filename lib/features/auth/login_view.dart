@@ -108,7 +108,7 @@ class _LoginViewState extends State<LoginView>{
                                 _passwordController.text).then((value){
                                if(value){
                                  CustomSnackBar.showSuccess(context, AppString.loginSuccessful);
-                                 context.pushNamed(RouteNames.homepage);
+                                 context.pushReplacementNamed(RouteNames.homepage);
                                }else{
                                  CustomSnackBar.showError(context, "Login Failed! Try Again.");
                                }
