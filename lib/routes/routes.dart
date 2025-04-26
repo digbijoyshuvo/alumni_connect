@@ -7,7 +7,8 @@ import 'package:alumni_connect/features/homepagefeatures/eventPage/check_permiss
 import 'package:alumni_connect/features/homepagefeatures/eventPage/create_event.dart';
 import 'package:alumni_connect/features/homepagefeatures/profile_page.dart';
 import 'package:alumni_connect/features/homepagefeatures/searchingAlumni/search_alumni.dart';
-import 'package:alumni_connect/features/homepagefeatures/searchingAlumni/search_alumni_result.dart';
+import 'package:alumni_connect/features/homepagefeatures/searchingAlumni/search_alumni_by_location.dart';
+import 'package:alumni_connect/features/homepagefeatures/searchingAlumni/search_alumni_by_series.dart';
 import 'package:alumni_connect/features/homepagefeatures/tuitionpage/add_tution.dart';
 import 'package:alumni_connect/features/homepagefeatures/tuitionpage/edit_tuition.dart';
 import 'package:alumni_connect/features/homepagefeatures/tuitionpage/tution_page.dart';
@@ -96,6 +97,11 @@ final GoRouter router = GoRouter(routes: [
         name:RouteNames.searchAlumni,
         path: "/searchAlumni",
         builder: (context,state) => const SearchLocationPage(),
+    ),
+    GoRoute(
+        name:RouteNames.searchBySeries,
+        path: "/searchBySeries",
+        builder: (context,state) => const SearchBySeries(),
     ),
 
 ]);

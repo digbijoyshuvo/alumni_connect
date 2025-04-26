@@ -113,14 +113,14 @@ class _AlumniDirectoryState extends State<AlumniDirectory> {
                     title: "Your Batch mates",
                     gradientColors: [Color(0xFF56ab2f), Color(0xFFa8e063)],
                     onTap: () {
-                      // TODO: Navigate
+                      context.pushNamed(RouteNames.searchBySeries);
                     },
                   ),
                   _GradientButton(
                     title: "People Closer You",
                     gradientColors: [Color(0xFF74ebd5), Color(0xFFACB6E5)],
                     onTap: () {
-                      // TODO: Navigate
+                     context.pushNamed(RouteNames.searchAlumni);
                     },
                   ),
                 ],
