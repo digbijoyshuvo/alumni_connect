@@ -67,7 +67,9 @@ class _AlumniInfoState extends State<AlumniInfo> {
       body: isLoading
           ? const Center(child: CircularProgressIndicator(color: Colors.purpleAccent))
           : Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+        padding: const EdgeInsets.symmetric(
+            vertical: 10
+        ),
         child: CustomScrollView(
           slivers: [
             SliverList(

@@ -1,4 +1,5 @@
 import 'package:alumni_connect/data/database/event_database.dart';
+import 'package:alumni_connect/features/homepagefeatures/eventPage/event_container.dart';
 import 'package:alumni_connect/routes/route_names.dart';
 import 'package:appwrite/models.dart';
 import 'package:flutter/material.dart';
@@ -33,22 +34,47 @@ class _EventsPageState extends State<EventsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          // backgroundColor: Colors.greenAccent,
-          title: Text("Upcoming Events",style: TextStyle(fontWeight: FontWeight.w600),)),
-      body:CustomScrollView(
-        slivers: [
-          SliverList(delegate: SliverChildBuilderDelegate((context,index) => Padding(
-        padding: const EdgeInsets.all(8),
-            child: ListTile(
-
-              title: Text(events[index].data["name"],
-                style:TextStyle(color: Colors.lightGreenAccent,fontSize: 20) ,),
-              subtitle: Text(events[index].data["location"],
-                style:TextStyle(color: Colors.greenAccent,fontSize: 15) ,),
+      appBar:PreferredSize(
+        preferredSize: const Size.fromHeight(80),
+        child: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFF003300), Color(0xFF00A152)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
 
+
+            borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black38,
+                blurRadius: 10,
+                offset: Offset(0, 4),
+              ),
+            ],
           ),
+          child: AppBar(
+            title: const Text(
+              "Upcoming Events",
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 22,
+              ),
+            ),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            centerTitle: true,
+          ),
+        ),
+      ),
+      body:CustomScrollView(
+        slivers: [
+          SliverList(delegate: SliverChildBuilderDelegate((context,index)
+          =>EventContainer(data: events[index]),
             childCount: events.length,
           ),)
         ],
@@ -59,8 +85,8 @@ class _EventsPageState extends State<EventsPage> {
             context.pushNamed(RouteNames.checkPermission);
             refresh();
           },
+        backgroundColor: Colors.greenAccent,
         child: Icon(Icons.add,color:Colors.black,),
-        backgroundColor: Colors.lightGreen,
       ) ,
     );
   }

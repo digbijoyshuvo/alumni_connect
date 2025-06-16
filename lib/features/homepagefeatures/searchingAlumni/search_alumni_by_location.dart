@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:appwrite/models.dart' as models;
 
-import '../../../data/database/user_information.dart';
+import '../../../data/database/user_information.dart'; // Import your separated logic
 import '../alumnimanagementsection/alumni_container.dart';
 
 class SearchLocationPage extends StatefulWidget {
@@ -12,18 +12,24 @@ class SearchLocationPage extends StatefulWidget {
 }
 
 class _SearchLocationPageState extends State<SearchLocationPage> {
-  final TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchLocationController = TextEditingController();
+  final TextEditingController _searchWorkPlaceController = TextEditingController();
   List<models.Document> _results = [];
   bool _isLoading = false;
 
   void _onSearch() async {
-    final location = _searchController.text.trim();
-    if (location.isEmpty) return;
+    final location = _searchLocationController.text.trim();
+    final workplace = _searchWorkPlaceController.text.trim();
 
     setState(() => _isLoading = true);
-    final results = await searchLocationResult(location);
+
+    final results = await searchByLocationAndName(
+      location: location.isEmpty ? "" : location,
+      workplace: workplace.isEmpty ? "" : workplace,
+    );
+
     setState(() {
-      _results = results ?? [];
+      _results = results;
       _isLoading = false;
     });
   }
@@ -37,19 +43,19 @@ class _SearchLocationPageState extends State<SearchLocationPage> {
           elevation: 0,
           flexibleSpace: Container(
             decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Color(0xFF6A11CB), Color(0xFF2575FC)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(15),
-                bottomLeft: Radius.circular(15),
-              )
+                gradient: LinearGradient(
+                  colors: [Color(0xFF6A11CB), Color(0xFF2575FC)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(15),
+                  bottomLeft: Radius.circular(15),
+                )
             ),
           ),
           title: const Text(
-            'Search by Location',
+            'Search Alumni',
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
@@ -57,36 +63,46 @@ class _SearchLocationPageState extends State<SearchLocationPage> {
       ),
       body: Column(
         children: [
-          // Search Box
-          // Search Box
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            color: Theme.of(context).scaffoldBackgroundColor,
-            child: TextField(
-              controller: _searchController,
-              onSubmitted: (_) => _onSearch(),
-              style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
-              decoration: InputDecoration(
-                hintText: 'Enter location...',
-                hintStyle:
-                TextStyle(color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6)),
-                prefixIcon: Icon(Icons.search, color: Theme.of(context).colorScheme.primary),
-                filled: true,
-                fillColor: Theme.of(context).colorScheme.surfaceVariant,
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
+            child: Column(
+              children: [
+                TextField(
+                  controller: _searchLocationController,
+                  onSubmitted: (_) => _onSearch(),
+                  decoration: InputDecoration(
+                    hintText: 'Enter location...',
+                    prefixIcon: Icon(Icons.location_on, color: Theme.of(context).colorScheme.primary),
+                    filled: true,
+                    fillColor: Theme.of(context).colorScheme.surfaceVariant,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
                 ),
-              ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: _searchWorkPlaceController,
+                  onSubmitted: (_) => _onSearch(),
+                  decoration: InputDecoration(
+                    hintText: 'Enter Company/University...',
+                    prefixIcon: Icon(Icons.person, color: Theme.of(context).colorScheme.primary),
+                    filled: true,
+                    fillColor: Theme.of(context).colorScheme.surfaceVariant,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-
-          // Divider Line
-          // Gradient Divider Line
           Container(
             height: 2,
-            margin: const EdgeInsets.symmetric(horizontal: 16),
+            margin: const EdgeInsets.symmetric(horizontal: 16,
+            vertical: 10),
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [Color(0xFF6A11CB), Color(0xFF2575FC)],
@@ -96,17 +112,16 @@ class _SearchLocationPageState extends State<SearchLocationPage> {
               borderRadius: BorderRadius.all(Radius.circular(4)),
             ),
           ),
-
-          // Body Section
           Expanded(
             child: _isLoading
                 ? const Center(child: CircularProgressIndicator())
                 : _results.isEmpty
-                ? const Center(child: Text("No results found.",
-            style: TextStyle(fontSize: 30,fontWeight: FontWeight.w600),))
+                ? const Center(child: Text("No results found.", style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600)))
                 : Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 8, vertical: 8),
+              padding: const EdgeInsets.only(
+                top: 10,
+                bottom: 10,
+              ),
               child: CustomScrollView(
                 slivers: [
                   SliverList(
@@ -117,8 +132,7 @@ class _SearchLocationPageState extends State<SearchLocationPage> {
                           duration: Duration(milliseconds: 300 + index * 100),
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 12.0),
-                            child:
-                            AlumniContainer(data: _results[index]),
+                            child: AlumniContainer(data: _results[index]),
                           ),
                         );
                       },

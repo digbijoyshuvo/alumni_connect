@@ -88,7 +88,12 @@ class _AlumniDirectoryState extends State<AlumniDirectory> {
           // Buttons section
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              padding: const EdgeInsets.only(
+                right: 20,
+                left: 20,
+                top: 3,
+                bottom: 3
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -102,12 +107,14 @@ class _AlumniDirectoryState extends State<AlumniDirectory> {
                     onTap: () {
                       context.pushNamed(RouteNames.updateAlumni);
                     },
+                    icon: Icons.edit,
                   ):_GradientButton(
                     title: "Join Our Community",
                     gradientColors: [Color(0xFFBA5370), Color(0xFFF4E2D8)],
                     onTap: () {
                       context.pushNamed(RouteNames.createAlumni);
                     },
+                    icon: Icons.people,
                   ),
                   _GradientButton(
                     title: "Your Batch mates",
@@ -115,13 +122,18 @@ class _AlumniDirectoryState extends State<AlumniDirectory> {
                     onTap: () {
                       context.pushNamed(RouteNames.searchBySeries);
                     },
+                    icon: Icons.people_alt_outlined,
                   ),
                   _GradientButton(
                     title: "People Closer You",
-                    gradientColors: [Color(0xFF74ebd5), Color(0xFFACB6E5)],
+                    gradientColors: [
+                      Color(0xFF5B86E5), // stronger blue
+                      Color(0xFF36D1DC), // vibrant teal
+                    ],
                     onTap: () {
                      context.pushNamed(RouteNames.searchAlumni);
                     },
+                    icon: Icons.search,
                   ),
                 ],
               ),
@@ -137,11 +149,13 @@ class _GradientButton extends StatelessWidget {
   final String title;
   final List<Color> gradientColors;
   final VoidCallback onTap;
+  final IconData icon;
 
   const _GradientButton({
     required this.title,
     required this.gradientColors,
     required this.onTap,
+    required this.icon,
   });
 
   @override
@@ -149,7 +163,7 @@ class _GradientButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 110,
+        height: 130,
         width: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -157,7 +171,10 @@ class _GradientButton extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(15),
+            bottomLeft: Radius.circular(15),
+          ),
           boxShadow: [
             BoxShadow(
               color: gradientColors.last.withOpacity(0.3),
@@ -166,8 +183,15 @@ class _GradientButton extends StatelessWidget {
             ),
           ],
         ),
-        child: Center(
-          child: Text(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              icon,
+              size: 40,
+              color: Colors.white,
+            ),
+          Text(
             title,
             textAlign: TextAlign.center,
             style: const TextStyle(
@@ -177,7 +201,7 @@ class _GradientButton extends StatelessWidget {
               letterSpacing: 1.0,
             ),
           ),
-        ),
+        ],),
       ),
     );
   }

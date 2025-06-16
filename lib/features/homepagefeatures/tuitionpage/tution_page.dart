@@ -133,6 +133,14 @@ class _TuitionPageState extends State<TuitionPage> {
                                   ),
                                 ),
                                 Text(
+                                  "Class : ${tuition[index].data["class"]}",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16,
+                                    color: Colors.redAccent,
+                                  ),
+                                ),
+                                Text(
                                   "Subjects : ${tuition[index].data["subjects"]}",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,

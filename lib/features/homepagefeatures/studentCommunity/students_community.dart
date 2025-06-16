@@ -67,7 +67,12 @@ class StudentsCommunity extends StatelessWidget {
           // Body Buttons
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32.0),
+              padding: const EdgeInsets.only(
+                // top: ,
+                bottom: 10,
+                right: 20,
+                left: 20,
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -98,7 +103,7 @@ class StudentsCommunity extends StatelessWidget {
                   _CommunityButton(
                     title: "Update Tuition Offers",
                     color: const Color(0xFFff416c),
-                    icon: Icons.groups,
+                    icon: Icons.edit_note,
                     onTap: () {
                       context.pushNamed(RouteNames.editTuition);
                     },
@@ -131,7 +136,7 @@ class _CommunityButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 100,
+        height: 120,
         width: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -139,7 +144,11 @@ class _CommunityButton extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(15),
+            bottomLeft: Radius.circular(15)
+            
+          ),
           boxShadow: [
             BoxShadow(
               color: color.withOpacity(0.3),
@@ -148,11 +157,11 @@ class _CommunityButton extends StatelessWidget {
             ),
           ],
         ),
-        child: Row(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(icon, color: Colors.white, size: 26),
-            const SizedBox(width: 12),
+            const SizedBox(width: 10),
             Text(
               title,
               style: const TextStyle(

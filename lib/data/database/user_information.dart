@@ -1,11 +1,13 @@
 
 import 'package:alumni_connect/data/saved_data.dart';
 import 'package:appwrite/appwrite.dart';
-
 import '../auth/auth.dart';
+import 'package:appwrite/models.dart' as models;
+
 
 String databaseId = "67dd35380029a4eca560";
 String userCollectionId = "67dd3547003348744b28";
+
 
 final Databases databases = Databases(client);
 
@@ -179,7 +181,7 @@ Future<void> updateAlumni(
  }
 
 
- //  search by a specific attribute in the database
+  // search by a specific attribute in the database
 Future searchLocationResult(
     String location,
     )async {
@@ -188,7 +190,7 @@ Future searchLocationResult(
       databaseId: databaseId,
       collectionId: "67df20c40034e8b0a9f5",
       queries: [
-        Query.startsWith("location", location),
+        Query.contains("location", location),
       ],);
     return data.documents;
   } catch (ex) {
@@ -204,7 +206,7 @@ Future searchBySeries(
         databaseId: databaseId,
         collectionId: "67df20c40034e8b0a9f5",
       queries: [
-        Query.startsWith("Series", series),
+        Query.contains("Series", series),
       ],);
     return data.documents;
   }catch(ex){
@@ -213,3 +215,33 @@ Future searchBySeries(
  }
 
 
+Future<List<models.Document>> searchByLocationAndName({
+  required String? location,
+  required String? workplace,
+}) async {
+  try {
+    List<String> queries = [];
+
+    if (location != null && location.isNotEmpty) {
+      queries.add(Query.contains("location", location));
+    }
+    if (workplace != null && workplace.isNotEmpty) {
+      queries.add(Query.contains("workplace", workplace));
+    }
+
+    if (queries.isEmpty) {
+      return [];
+    }
+
+    final data = await databases.listDocuments(
+      databaseId: databaseId,
+      collectionId: "67df20c40034e8b0a9f5",
+      queries: queries,
+    );
+
+    return data.documents;
+  } catch (e) {
+    print('Database search error: $e');
+    return [];
+  }
+}
