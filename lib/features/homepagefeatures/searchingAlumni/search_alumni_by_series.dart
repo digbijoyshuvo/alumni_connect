@@ -16,6 +16,20 @@ class _SearchBySeriesState extends State<SearchBySeries> {
   List<models.Document> seriesResults = [];
   bool _isLoading = false;
 
+  @override
+  void initState(){
+    super.initState();
+    _fetchAllAlumni();
+  }
+  void _fetchAllAlumni() async{
+    setState(() => _isLoading = true);
+    final results = await getAllAlumni();
+    setState(() {
+      seriesResults = results ?? [];
+      _isLoading = false;
+    });
+  }
+
   void _onSearch() async {
     final series = _searchSeriesController.text.trim();
     if (series.isEmpty) return;

@@ -14,6 +14,7 @@ Future<void> addTuition(
     String extraInfo,
     String location,
     String contactInfo,
+    String contactEmail,
     String createdBy,
     ) async{
   return databases.createDocument(databaseId: databaseId,
@@ -26,6 +27,7 @@ Future<void> addTuition(
         "extra_info" : extraInfo,
         "location" : location,
         "contactInfo" : contactInfo,
+        "contactEmail" :contactEmail,
         "createdBy" : createdBy,
   }).then((value) => print("Tuition added"))
       .catchError((ex) => print(ex));
@@ -64,6 +66,7 @@ Future<void> updateTuition(
     String extraInfo,
     String location,
     String contactInfo,
+    String contactEmail,
     String createdBy,
     String docId,
     ) async{
@@ -77,6 +80,7 @@ Future<void> updateTuition(
         "extra_info" : extraInfo,
         "location" : location,
         "contactInfo" : contactInfo,
+        "contactEmail" :contactEmail,
         "createdBy" : createdBy,
       }).then((value) => print("Tuition Updated"))
       .catchError((ex) => print(ex));

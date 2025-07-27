@@ -21,13 +21,15 @@ class _AddTuitionState extends State<AddTuition> {
  final TextEditingController _subjectEditingController = TextEditingController();
  final TextEditingController _salaryEditingController = TextEditingController();
  final TextEditingController _locationEditingController = TextEditingController();
-  final TextEditingController _contactInfoController = TextEditingController();
+ final TextEditingController _contactInfoController = TextEditingController();
+ final TextEditingController _emailController = TextEditingController();
 
   @override
   void initState(){
     userId = SavedData.getUserId();
     super.initState();
   }
+
  @override
  void dispose(){
    _classEditingController.dispose();
@@ -36,17 +38,18 @@ class _AddTuitionState extends State<AddTuition> {
    _subjectEditingController.dispose();
    _locationEditingController.dispose();
    _contactInfoController.dispose();
+   _emailController.dispose();
   super.dispose();
  }
 
- @override
- void cearText(){
+ void clearText(){
    _classEditingController.clear();
    _descriptionEditingController.clear();
    _salaryEditingController.clear();
    _subjectEditingController.clear();
     _locationEditingController.clear();
     _contactInfoController.clear();
+    _emailController.clear();
  }
 
   @override
@@ -131,9 +134,24 @@ class _AddTuitionState extends State<AddTuition> {
                   keyboardType: TextInputType.text,
                   obscureText: false,
                   suffix: null,
-                  hintText: "Enter Email/Phone No.",
+                  hintText: "Phone No.",
                   prefixIcon: null),
               SizedBox(height: 10,),
+              CustomTextFormField(
+                  controller: _emailController,
+                  validator: (val){
+                    if(val!.isEmpty){
+                      return AppString.required;
+                    }
+                    return null;
+                  },
+                  keyboardType: TextInputType.text,
+                  obscureText: false,
+                  suffix: null,
+                  hintText: "Email address...",
+                  prefixIcon: null),
+              SizedBox(height: 10,),
+
               CustomTextFormField(
                   controller: _descriptionEditingController,
                   validator: (val){
@@ -150,23 +168,34 @@ class _AddTuitionState extends State<AddTuition> {
                   prefixIcon: null),
               SizedBox(height: 10,),
               RoundedElevatedButton(buttonText: "Add Tuition",
-                  onPressed: (){
-                if(_classEditingController.text=="" ||_descriptionEditingController.text==""||
-                _salaryEditingController.text==""|| _subjectEditingController.text=="" ||
-                _locationEditingController.text==""){
-                  CustomSnackBar.showError(context, AppString.required);
-                }else {
-                  addTuition(_classEditingController.text,
-                      _subjectEditingController.text,
-                      _salaryEditingController.text,
-                      _descriptionEditingController.text,
-                        _locationEditingController.text,
-                      _contactInfoController.text,
-                      userId).then((value) =>
-                      CustomSnackBar.showSuccess(context, "Tuition Offer Added"));
-                  Navigator.pop(context);
-                }
-                  }),
+                  onPressed: () async {
+                    if (_classEditingController.text == "" ||
+                        _descriptionEditingController.text == "" ||
+                        _salaryEditingController.text == "" ||
+                        _subjectEditingController.text == "" ||
+                        _locationEditingController.text == "") {
+                      CustomSnackBar.showError(context, AppString.required);
+                    } else {
+                      try {
+                        await addTuition(
+                          _classEditingController.text,
+                          _subjectEditingController.text,
+                          _salaryEditingController.text,
+                          _descriptionEditingController.text,
+                          _locationEditingController.text,
+                          _contactInfoController.text,
+                          _emailController.text,
+                          userId,
+                        );
+                        CustomSnackBar.showSuccess(context, "Tuition Offer Added");
+                        Navigator.pop(context, true);
+                      } catch (e) {
+                        CustomSnackBar.showError(context, "Failed to add tuition.");
+                      }
+                    }
+                  }
+
+              ),
             ],
                 ),
         ),

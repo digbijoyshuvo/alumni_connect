@@ -14,5 +14,7 @@ static const createEvent = "createEvent";
 static const tuitionPage = "tuitionPage";
 static const searchAlumni = "searchAlumni";
 static const searchBySeries = "searchBySeries";
+static const resourcePage = "resourcePage";
+static const jobOffersPage = "jobOffersPage";
 
 }

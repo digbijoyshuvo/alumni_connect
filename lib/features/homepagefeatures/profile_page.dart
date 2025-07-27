@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../data/auth/auth.dart';
 import '../../routes/route_names.dart';
-import '../../widgets/elevated_button.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -13,8 +12,8 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  String userName = "User";
-  String userEmail = "Email";
+  String userName = "Sarah Page";
+  String userEmail = "xxx@gmail.com";
 
   void _logout(BuildContext context) {
     showDialog(
@@ -54,123 +53,180 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF121212),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: ()=> Navigator.pop(context),
-            color: Colors.white,),
-        centerTitle: true,
-        title: ShaderMask(
-          shaderCallback: (Rect bounds) {
-            return const LinearGradient(
-              colors: [Color(0xFFA8E063), Color(0xFF56AB2F)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ).createShader(bounds);
-          },
-          child: const Text(
-            "Profile",
-            style: TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.bold,
-              color: Colors.white, // will be overridden by ShaderMask
-            ),
-          ),
-        ),
-      ),
-
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Center(
-          child: Column(
-            children: [
-              // Avatar with gradient border
-              Container(
-                padding: const EdgeInsets.all(3),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFFA8E063), Color(0xFF56AB2F)],
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          children: [
+            SizedBox(height: 15,),
+            // Back and Settings
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.arrow_back, color: Colors.white),
+                  onPressed: () => Navigator.pop(context),
+                ),
+                Text("Profile",
+                  style:TextStyle(fontSize: 25,
+                      fontWeight: FontWeight.bold,color: Colors.lightGreen),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 20),
+
+            // Profile Image with Edit Button
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  width: 120,
+                  height: 120,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(
+                      colors: [Color(0xFFA8E063), Color(0xFF56AB2F)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
                   ),
                 ),
-                child: CircleAvatar(
+                Container(
+                  width: 110,
+                  height: 110,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF121212),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                const CircleAvatar(
                   radius: 50,
-                  backgroundColor: Colors.grey[900],
-                  child: const Icon(Icons.person, size: 50, color: Colors.white),
+                  backgroundImage: AssetImage('assets/profile.jpg'), // replace with dynamic image
                 ),
-              ),
-
-              const SizedBox(height: 16),
-
-              // Info card
-              Card(
-                color: const Color(0xFF1F1F1F),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                elevation: 4,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-                  child: Column(
-                    children: [
-                      Text(
-                        userName,
-                        style: const TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold),
+                Positioned(
+                  bottom: 8,
+                  right: 10,
+                  child: GestureDetector(
+                    onTap: () {
+                      // Handle image update
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(6),
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xFF1A1A1A),
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        userEmail,
-                        style: const TextStyle(fontSize: 16, color: Colors.white70),
+                      child: const Icon(
+                        Icons.edit,
+                        size: 16,
+                        color: Colors.white70,
                       ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
+              ],
+            ),
 
-              const SizedBox(height: 40),
+            const SizedBox(height: 10),
 
-              // Divider & Label
-              Row(
-                children: [
-                  const Expanded(child: Divider(color: Colors.white12)),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 12),
-                    child: Text("Account Actions", style: TextStyle(color: Colors.white70)),
-                  ),
-                  const Expanded(child: Divider(color: Colors.white12)),
-                ],
+            // Name and Role
+            Text(
+              userName,
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
               ),
+            ),
+            Text(
+              userEmail,
+              style: const TextStyle(
+                fontSize: 15,
+                color: Colors.white,
+              ),
+            ),
 
-              const SizedBox(height: 20),
+            const SizedBox(height: 40),
 
-              RoundedElevatedButton(
-                buttonText: "Edit Your Alumni Profile",
-                onPressed: () => context.pushNamed(RouteNames.updateAlumni),
-              ),
-              const SizedBox(height: 12),
-              RoundedElevatedButton(
-                buttonText: "Update or Delete Tuition Offers",
-                onPressed: () => context.pushNamed(RouteNames.editTuition),
-              ),
-              const SizedBox(height: 12),
-              gradientLogoutButton(context),
-            ],
-          ),
+            // Profile Details Form
+            _buildInfoField(Icons.person, "Name",userName),
+            const SizedBox(height: 12),
+            _buildInfoField(Icons.email_outlined, "Your Email", userEmail),
+            const SizedBox(height: 30),
+
+            // Action Buttons
+            _buildGradientButton("Edit Your Alumni Profile", () => context.pushNamed(RouteNames.updateAlumni)),
+            const SizedBox(height: 12),
+            _buildGradientButton("Update or Delete Tuition Offers", () => context.pushNamed(RouteNames.editTuition)),
+            const SizedBox(height: 12),
+            _buildLogoutButton(context),
+          ],
         ),
       ),
     );
   }
 
-  Widget gradientLogoutButton(BuildContext context) {
+  Widget _buildInfoField(IconData icon, String label, String value, {bool isPassword = false}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label, style: const TextStyle(color: Colors.white70, fontSize: 13)),
+        const SizedBox(height: 6),
+        TextFormField(
+          initialValue: value,
+          readOnly: true,
+          obscureText: isPassword,
+          style: const TextStyle(color: Colors.white),
+          decoration: InputDecoration(
+            prefixIcon: Icon(icon, color: Colors.white70),
+            filled: true,
+            fillColor: const Color(0xFF1F1F1F),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: Colors.transparent),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: Color(0xFF56AB2F)),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildGradientButton(String text, VoidCallback onPressed) {
     return Container(
       width: double.infinity,
       height: 48,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [
-            Color(0xFFB31217), // Deep Red
-            Color(0xFFE52D27), // Vivid Red
-          ],
+          colors: [Color(0xFFA8E063), Color(0xFF56AB2F)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+          elevation: 0,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        ),
+        child: Text(text, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
+      ),
+    );
+  }
+
+  Widget _buildLogoutButton(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 48,
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [Color(0xFFB31217), Color(0xFFE52D27)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -189,20 +245,10 @@ class _ProfilePageState extends State<ProfilePage> {
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
           elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         ),
-        child: const Text(
-          "Logout",
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w600,
-            fontSize: 16,
-          ),
-        ),
+        child: const Text("Logout", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
       ),
     );
   }
-
 }

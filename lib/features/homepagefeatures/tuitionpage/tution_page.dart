@@ -5,6 +5,7 @@ import 'package:alumni_connect/widgets/custom_snackbar.dart';
 import 'package:appwrite/models.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TuitionPage extends StatefulWidget {
   const TuitionPage({super.key});
@@ -40,13 +41,7 @@ class _TuitionPageState extends State<TuitionPage> {
             padding: const EdgeInsets.symmetric(vertical: 32),
             decoration: BoxDecoration(
               gradient: LinearGradient(
-                // colors:  [Color(0xFF0F2027), Color(0xFF203A43), Color(0xFF2C5364)],
-                // colors: [Color(0xFF2193b0), Color(0xFF6dd5ed)],
-                // colors: [Color(0xFF00C9FF), Color(0xFF92FE9D)],
                 colors: [Color(0xFF3A1C71), Color(0xFFD76D77), Color(0xFFFFAF7B)],
-                // colors: [Color(0xFFFF5F6D), Color(0xFFFFC371)],
-                // colors: [Color(0xFF7F00FF), Color(0xFFE100FF)],
-
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -101,8 +96,102 @@ class _TuitionPageState extends State<TuitionPage> {
                         (context, index) => Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: GestureDetector(
-                        onTap: () => CustomSnackBar.showSuccess(
-                            context, "Please Go to Profile And Delete or Update the Tuition"),
+                        onTap: () {
+                          final phoneNumber = tuition[index].data["contactInfo"];
+                          final contactEmail = tuition[index].data["contactEmail"] ?? ""; // Optional field
+
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                backgroundColor: const Color(0xff1F2B44),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                title: const Text(
+                                  "Contact to get the Tuition?",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                content: Text(
+                                  "Call or mail the person directly.",
+                                  style: const TextStyle(
+                                    color: Colors.white70,
+                                  ),
+                                ),
+                                actions: [
+                                  // Left Side Icons
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      // Phone and Mail
+                                      Row(
+                                        children: [
+                                          IconButton(
+                                            icon: const Icon(Icons.phone, color: Colors.greenAccent),
+                                            tooltip: 'Call',
+                                            onPressed: () async {
+                                              final Uri phoneUri = Uri(scheme: 'tel', path: phoneNumber);
+                                              if (await canLaunchUrl(phoneUri)) {
+                                                await launchUrl(phoneUri);
+                                              } else {
+                                                CustomSnackBar.showError(context, "Can't Open the Phone");
+                                              }
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                          IconButton(
+                                            icon: const Icon(Icons.email, color: Colors.lightBlueAccent),
+                                            tooltip: 'Email',
+                                            onPressed: () async {
+                                              if (contactEmail.isNotEmpty) {
+                                                final Uri emailUri = Uri(
+                                                  scheme: 'mailto',
+                                                  path: contactEmail,
+                                                  query: Uri.encodeFull("subject=Tuition Inquiry"),
+                                                );
+                                                if (await canLaunchUrl(emailUri)) {
+                                                  await launchUrl(emailUri);
+                                                } else {
+                                                 CustomSnackBar.showError(context, "Can't Open the email");
+                                                }
+                                              } else {
+                                               CustomSnackBar.showInfo(context, "No Email address Provided");
+                                              }
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      ),
+
+                                      // Right Side Close
+                                      TextButton(
+                                        style: TextButton.styleFrom(
+                                          foregroundColor: Colors.white,
+                                          backgroundColor: AppColor.errorColor,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(8),
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text(
+                                          "Close",
+                                          style: TextStyle(
+                                            color: Colors.white70,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
                         child: Container(
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
@@ -165,11 +254,19 @@ class _TuitionPageState extends State<TuitionPage> {
                                   ),
                                 ),
                                 Text(
-                                  "Contact : ${tuition[index].data["contactInfo"]}",
+                                  "Phone No : ${tuition[index].data["contactInfo"]}",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 16,
                                     color: Colors.orangeAccent,
+                                  ),
+                                ),
+                                Text(
+                                  "Email Address : ${tuition[index].data["contactEmail"]}",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 16,
+                                    color: Colors.limeAccent,
                                   ),
                                 ),
                                 Text(
@@ -196,8 +293,10 @@ class _TuitionPageState extends State<TuitionPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await context.pushNamed(RouteNames.addTuition);
-          refresh();
+          final result = await context.pushNamed(RouteNames.addTuition);
+          if (result == true) {
+            refresh();
+          }
         },
         backgroundColor: AppColor.appColor,
         child: Icon(Icons.add),

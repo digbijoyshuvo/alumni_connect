@@ -32,8 +32,11 @@ Future loginUser(String email, String password)async{
     final user = await account.createEmailPasswordSession(
         email: email,
         password: password);
-      getUserData();
+    await   getUserData();
+    final user2 = await account.get();
      SavedData.saveUserId(user.userId);
+     SavedData.saveUserName(user2.name);
+     SavedData.saveUserEmail(user2.email);
         return true;
   }on AppwriteException catch (ex){
     return false;

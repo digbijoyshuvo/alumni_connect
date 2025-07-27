@@ -125,7 +125,7 @@ class _EditTuitionState extends State<EditTuition> {
                     subtitle: Padding(
                       padding: const EdgeInsets.only(top: 8.0),
                       child: Text(
-                        "Location : ${editTuition[index].data["location"]}\nSalary : ${editTuition[index].data["salary"]}\nContact : ${editTuition[index].data["contactInfo"]}",
+                        "Location : ${editTuition[index].data["location"]}\nSalary : ${editTuition[index].data["salary"]}\nPhone No : ${editTuition[index].data["contactInfo"]}\nEmail Address : ${editTuition[index].data["contactEmail"]}",
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.grey[300],
@@ -144,6 +144,7 @@ class _EditTuitionState extends State<EditTuition> {
                               salary: editTuition[index].data["salary"],
                               extraInfo: editTuition[index].data["extra_info"],
                               contactInfo: editTuition[index].data["contactInfo"],
+                              contactEmail : editTuition[index].data["contactEmail"],
                               docId: editTuition[index].$id,
                             ),
                           ),

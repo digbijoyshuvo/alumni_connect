@@ -1,14 +1,15 @@
 import 'package:alumni_connect/features/auth/login_view.dart';
 import 'package:alumni_connect/features/auth/register_view.dart';
 import 'package:alumni_connect/features/homepage/home_page.dart';
+import 'package:alumni_connect/features/homepagefeatures/Joboffers/addjobpage.dart';
 import 'package:alumni_connect/features/homepagefeatures/alumnimanagementsection/create_alumni_account.dart';
 import 'package:alumni_connect/features/homepagefeatures/alumnimanagementsection/update_alumni_page.dart';
 import 'package:alumni_connect/features/homepagefeatures/eventPage/check_permission.dart';
 import 'package:alumni_connect/features/homepagefeatures/eventPage/create_event.dart';
 import 'package:alumni_connect/features/homepagefeatures/profile_page.dart';
-import 'package:alumni_connect/features/homepagefeatures/searchingAlumni/search_alumni.dart';
 import 'package:alumni_connect/features/homepagefeatures/searchingAlumni/search_alumni_by_location.dart';
 import 'package:alumni_connect/features/homepagefeatures/searchingAlumni/search_alumni_by_series.dart';
+import 'package:alumni_connect/features/homepagefeatures/studentCommunity/resourcepage.dart';
 import 'package:alumni_connect/features/homepagefeatures/tuitionpage/add_tution.dart';
 import 'package:alumni_connect/features/homepagefeatures/tuitionpage/edit_tuition.dart';
 import 'package:alumni_connect/features/homepagefeatures/tuitionpage/tution_page.dart';
@@ -103,5 +104,14 @@ final GoRouter router = GoRouter(routes: [
         path: "/searchBySeries",
         builder: (context,state) => const SearchBySeries(),
     ),
-
+    GoRoute(
+        name:RouteNames.resourcePage,
+        path: "/resourcePage",
+        builder: (context,state) => const ResourcePage(),
+    ),
+    GoRoute(
+        name:RouteNames.jobOffersPage,
+        path: "/jobOffersPage",
+        builder: (context,state) => const AddJobPage(),
+    ),
 ]);

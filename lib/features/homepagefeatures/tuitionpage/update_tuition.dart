@@ -10,8 +10,9 @@ import 'package:go_router/go_router.dart';
 import '../../../data/saved_data.dart';
 
 class UpdateTuition extends StatefulWidget {
-  final String Class,subjects,location,salary,contactInfo,extraInfo,docId;
-  const UpdateTuition({super.key, required this.Class, required this.subjects, required this.location, required this.salary, required this.extraInfo, required this.docId, required this.contactInfo});
+  final String Class,subjects,location,salary,contactInfo,contactEmail,extraInfo,docId;
+  const UpdateTuition({super.key, required this.Class, required this.subjects, required this.location,
+    required this.salary, required this.extraInfo, required this.docId, required this.contactInfo, required this.contactEmail});
 
   @override
   State<UpdateTuition> createState() => _UpdateTuitionState();
@@ -25,7 +26,7 @@ class _UpdateTuitionState extends State<UpdateTuition> {
   final TextEditingController _salaryEditingController = TextEditingController();
   final TextEditingController _locationEditingController = TextEditingController();
   final TextEditingController _contactInfoController = TextEditingController();
-
+  final TextEditingController _emailController = TextEditingController();
   @override
   void initState(){
     super.initState();
@@ -36,6 +37,7 @@ class _UpdateTuitionState extends State<UpdateTuition> {
     _salaryEditingController.text = widget.salary;
     _contactInfoController.text = widget.contactInfo;
     _descriptionEditingController.text = widget.extraInfo;
+    _emailController.text = widget.contactEmail;
 
   }
   @override
@@ -46,6 +48,7 @@ class _UpdateTuitionState extends State<UpdateTuition> {
     _subjectEditingController.dispose();
     _locationEditingController.dispose();
     _contactInfoController.dispose();
+    _emailController.dispose();
     super.dispose();
   }
 
@@ -134,10 +137,25 @@ class _UpdateTuitionState extends State<UpdateTuition> {
                   }, keyboardType: TextInputType.text,
                   obscureText: false,
                   suffix: null,
-                  hintText: "Enter Email/Phone No.",
-                  labelText: "Enter Email/Phone No.",
+                  hintText: "Phone No.",
+                  labelText: "Phone No.",
                   prefixIcon: null),
               SizedBox(height: 13,),
+              CustomTextFormField(
+                  controller: _emailController,
+                  validator: (val){
+                    if(val!.isEmpty){
+                      return AppString.required;
+                    }
+                    return null;
+                  }, keyboardType: TextInputType.text,
+                  obscureText: false,
+                  suffix: null,
+                  hintText: "Email Address",
+                  labelText: "Email Address",
+                  prefixIcon: null),
+              SizedBox(height: 13,),
+
               CustomTextFormField(
                   controller: _descriptionEditingController,
                   validator: (val){
@@ -167,6 +185,7 @@ class _UpdateTuitionState extends State<UpdateTuition> {
                           _descriptionEditingController.text,
                           _locationEditingController.text,
                           _contactInfoController.text,
+                          _emailController.text,
                           userId, widget.docId).then((value) =>
                           CustomSnackBar.showSuccess(context, "Updated Tuition Offer"));
                       context.pushNamed(RouteNames.homepage);
@@ -183,7 +202,7 @@ class _UpdateTuitionState extends State<UpdateTuition> {
                           deleteTuition(widget.docId).then((value) {
                             CustomSnackBar.showSuccess(context, "Tuition Offer Deleted Successfully");
                             Navigator.pop(context);
-                            context.pushReplacementNamed(RouteNames.homepage);
+                            context.pushReplacementNamed(RouteNames.editTuition);
                           });
                         },
                             child: Text("Yes",style: TextStyle(color: Colors.red),)),

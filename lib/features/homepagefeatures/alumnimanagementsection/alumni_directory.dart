@@ -83,7 +83,7 @@ class _AlumniDirectoryState extends State<AlumniDirectory> {
             ),
           ),
 
-          const SizedBox(height: 30),
+          const SizedBox(height: 10),
 
           // Buttons section
           Expanded(
@@ -134,6 +134,18 @@ class _AlumniDirectoryState extends State<AlumniDirectory> {
                      context.pushNamed(RouteNames.searchAlumni);
                     },
                     icon: Icons.search,
+                  ),
+
+                  _GradientButton(
+                    title: "Add Job Offers",
+                    gradientColors: [
+                      Color(0xFF00B4DB), // fresh blue
+                      Color(0xFF0083B0), // deep teal
+                    ],
+                    onTap: () {
+                      context.pushNamed(RouteNames.jobOffersPage);
+                    },
+                    icon: Icons.work_outline,
                   ),
                 ],
               ),

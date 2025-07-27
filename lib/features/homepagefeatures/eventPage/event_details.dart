@@ -16,49 +16,64 @@ class _EventDetailsState extends State<EventDetails> {
     final event = widget.data.data;
 
     return Scaffold(
-      body: Stack(
-        children: [
-          // Background Image
-          Container(
-            height: double.infinity,
-            width: double.infinity,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/event_background.jpg'), // Replace with your background image
-                fit: BoxFit.cover,
-              ),
-            ),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFF1E1F28), // dark base (soft black)
+              Color(0xFF323044), // bluish slate
+              Color(0xFF3A3F5C), // dark indigo blue
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
-
-          // Dark overlay for readability
-          Container(
-            color: Colors.black.withOpacity(0.5),
-          ),
-
-          // Content
-          SingleChildScrollView(
+        ),
+        child: SafeArea(
+          child: SingleChildScrollView(
             padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 50),
+                const SizedBox(height: 20),
 
-                Text(
-                  event["name"] ?? "Unnamed Event",
-                  style: const TextStyle(
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                Center(
+                  child: Text(
+                    event["name"] ?? "Unnamed Event",
+                    style: const TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 10),
+                Center(
+                  child: Container(
+                    width: double.infinity,
+                    height: 4,
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xFF00F260), // Mint green
+                          Color(0xFF0575E6), // Sky blue
+                        ],
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 30),
 
                 Text(
                   "Description",
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
-                    color: Colors.greenAccent.shade200,
+                    color: Colors.lightGreenAccent.shade100,
                   ),
                 ),
                 const SizedBox(height: 5),
@@ -76,7 +91,7 @@ class _EventDetailsState extends State<EventDetails> {
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
-                    color: Colors.amber.shade200,
+                    color: Colors.pinkAccent.shade100,
                   ),
                 ),
                 const SizedBox(height: 5),
@@ -87,16 +102,17 @@ class _EventDetailsState extends State<EventDetails> {
                     color: Colors.white,
                   ),
                 ),
+
                 const SizedBox(height: 40),
                 Row(
                   children: [
-                    const Icon(Icons.calendar_today, color: Colors.white),
+                    const Icon(Icons.calendar_today, color: Colors.redAccent),
                     const SizedBox(width: 10),
                     Text(
                       "Date: ${formatDate(event["date_time"])}",
                       style: const TextStyle(
                         fontSize: 18,
-                        color: Colors.white,
+                        color: Colors.redAccent,
                       ),
                     ),
                   ],
@@ -105,13 +121,13 @@ class _EventDetailsState extends State<EventDetails> {
                 const SizedBox(height: 10),
                 Row(
                   children: [
-                    const Icon(Icons.access_time, color: Colors.white),
+                    const Icon(Icons.access_time, color: Colors.redAccent),
                     const SizedBox(width: 10),
                     Text(
                       "Time: ${formatTime(event["date_time"])}",
                       style: const TextStyle(
                         fontSize: 18,
-                        color: Colors.white,
+                        color: Colors.redAccent,
                       ),
                     ),
                   ],
@@ -123,7 +139,7 @@ class _EventDetailsState extends State<EventDetails> {
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
-                    color: Colors.tealAccent.shade100,
+                    color: Colors.teal.shade600,
                   ),
                 ),
                 const SizedBox(height: 5),
@@ -138,7 +154,7 @@ class _EventDetailsState extends State<EventDetails> {
               ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }

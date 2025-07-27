@@ -95,17 +95,17 @@ class StudentsCommunity extends StatelessWidget {
                   _CommunityButton(
                     title: "Shared Resources",
                     color: const Color(0xFFf7971e),
-                    icon: Icons.folder_shared,
+                    icon: Icons.drive_folder_upload,
                     onTap: () {
-                      // Handle navigation
+                     context.pushNamed(RouteNames.resourcePage);
                     },
                   ),
                   _CommunityButton(
-                    title: "Update Tuition Offers",
+                    title: "Internship Offers",
                     color: const Color(0xFFff416c),
-                    icon: Icons.edit_note,
+                    icon: Icons.work,
                     onTap: () {
-                      context.pushNamed(RouteNames.editTuition);
+                      context.pushNamed(RouteNames.jobOffersPage);
                     },
                   ),
                 ],

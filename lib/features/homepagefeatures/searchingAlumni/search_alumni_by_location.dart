@@ -14,8 +14,23 @@ class SearchLocationPage extends StatefulWidget {
 class _SearchLocationPageState extends State<SearchLocationPage> {
   final TextEditingController _searchLocationController = TextEditingController();
   final TextEditingController _searchWorkPlaceController = TextEditingController();
+
   List<models.Document> _results = [];
   bool _isLoading = false;
+
+  @override
+  initState() {
+    super.initState();
+    _fetchAllAlumni();
+  }
+  void _fetchAllAlumni() async {
+    setState(() => _isLoading = true);
+    final results = await getAllAlumni();
+    setState(() {
+      _results = results ?? [];
+      _isLoading = false;
+    });
+  }
 
   void _onSearch() async {
     final location = _searchLocationController.text.trim();
@@ -102,7 +117,7 @@ class _SearchLocationPageState extends State<SearchLocationPage> {
           Container(
             height: 2,
             margin: const EdgeInsets.symmetric(horizontal: 16,
-            vertical: 10),
+                vertical: 10),
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [Color(0xFF6A11CB), Color(0xFF2575FC)],
@@ -114,7 +129,7 @@ class _SearchLocationPageState extends State<SearchLocationPage> {
           ),
           Expanded(
             child: _isLoading
-                ? const Center(child: CircularProgressIndicator())
+                ? const Center(child: CircularProgressIndicator(color: Colors.blue))
                 : _results.isEmpty
                 ? const Center(child: Text("No results found.", style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600)))
                 : Padding(

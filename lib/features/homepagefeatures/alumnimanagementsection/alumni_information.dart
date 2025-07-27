@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:appwrite/models.dart';
 import 'package:url_launcher/link.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AlumniInformation extends StatefulWidget {
   final Document data;
@@ -13,21 +14,23 @@ class AlumniInformation extends StatefulWidget {
 class _AlumniInformationState extends State<AlumniInformation> {
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
+    final media = MediaQuery.of(context);
+    final screenHeight = media.size.height;
+    final screenWidth = media.size.width;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF121212), // Dark background
+      backgroundColor: const Color(0xFF121212),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Top Image Section (1/3 screen height)
+          // Top Image Section
           ClipRRect(
             borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(30),
               bottomRight: Radius.circular(30),
             ),
             child: Container(
-              height: screenHeight * 0.33, // 1/3 of the screen
+              height: screenHeight * 0.33,
               width: double.infinity,
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -45,7 +48,7 @@ class _AlumniInformationState extends State<AlumniInformation> {
                 children: [
                   // Back Button
                   Positioned(
-                    top: 40,
+                    top: screenHeight * 0.04,
                     left: 16,
                     child: CircleAvatar(
                       backgroundColor: Colors.black.withOpacity(0.7),
@@ -64,9 +67,9 @@ class _AlumniInformationState extends State<AlumniInformation> {
                       children: [
                         Text(
                           widget.data.data["name"] ?? '',
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: Colors.white,
-                            fontSize: 30,
+                            fontSize: screenWidth * 0.07,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -77,9 +80,9 @@ class _AlumniInformationState extends State<AlumniInformation> {
                             const SizedBox(width: 4),
                             Text(
                               widget.data.data["location"] ?? '',
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Colors.white70,
-                                fontSize: 16,
+                                fontSize: screenWidth * 0.04,
                               ),
                             ),
                           ],
@@ -95,10 +98,10 @@ class _AlumniInformationState extends State<AlumniInformation> {
                       uri: Uri.parse(widget.data.data["facebookId"] ?? ''),
                       builder: (context, followLink) => GestureDetector(
                         onTap: followLink,
-                        child: const CircleAvatar(
-                          radius: 24,
+                        child: CircleAvatar(
+                          radius: screenWidth * 0.07,
                           backgroundColor: Colors.transparent,
-                          child: Icon(Icons.facebook, color: Colors.blueAccent, size: 50),
+                          child: Icon(Icons.facebook, color: Colors.blueAccent, size: screenWidth * 0.12),
                         ),
                       ),
                     ),
@@ -108,24 +111,62 @@ class _AlumniInformationState extends State<AlumniInformation> {
             ),
           ),
 
-          const SizedBox(height: 40),
+          SizedBox(height: screenHeight * 0.04),
 
-          // Information Section (open, no cards)
+          // Information Section
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.06),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _infoItem(Icons.person, "Name", widget.data.data["name"], textColor: Colors.white),
-                  const SizedBox(height: 18),
-                  _infoItem(Icons.apartment, "Department", widget.data.data["department"], textColor: Colors.white70),
-                  const SizedBox(height: 18),
-                  _infoItem(Icons.numbers, "Series", widget.data.data["Series"], textColor: Colors.white70),
-                  const SizedBox(height: 18),
-                  _infoItem(Icons.work, "Workplace", widget.data.data["workplace"], textColor: Colors.lightGreenAccent),
-                  const SizedBox(height: 18),
-                  _infoItem(Icons.email, "Email", widget.data.data["email"], textColor: Colors.lightBlueAccent),
+                  _infoItem(Icons.person, "Name", widget.data.data["name"], textColor: Colors.white, fontSize: screenWidth * 0.045),
+                  SizedBox(height: screenHeight * 0.02),
+                  _infoItem(Icons.apartment, "Department", widget.data.data["department"], textColor: Colors.white70, fontSize: screenWidth * 0.043),
+                  SizedBox(height: screenHeight * 0.02),
+                  _infoItem(Icons.numbers, "Series", widget.data.data["Series"], textColor: Colors.white70, fontSize: screenWidth * 0.043),
+                  SizedBox(height: screenHeight * 0.02),
+                  _infoItem(Icons.work, "Workplace", widget.data.data["workplace"], textColor: Colors.lightGreenAccent, fontSize: screenWidth * 0.043),
+                  SizedBox(height: screenHeight * 0.02),
+                  _infoItem(Icons.email, "Email", widget.data.data["email"], textColor: Colors.lightBlueAccent, fontSize: screenWidth * 0.043),
+
+                  SizedBox(height: screenHeight * 0.07),
+
+                  // Connect Button
+                  Center(
+                    child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueAccent,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth * 0.1,
+                          vertical: screenHeight * 0.015,
+                        ),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      ),
+                      onPressed: () {
+                        final email = widget.data.data["email"];
+                        if (email != null && email.isNotEmpty) {
+                          final Uri emailUri = Uri(
+                            scheme: 'mailto',
+                            path: email,
+                            query: Uri.encodeFull('subject=Hello from Alumni App'),
+                          );
+                          launchUrl(emailUri);
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text("Email address not available")),
+                          );
+                        }
+                      },
+                      icon: const Icon(Icons.email_outlined, color: Colors.white),
+                      label: Text(
+                        "Connect",
+                        style: TextStyle(color: Colors.white, fontSize: screenWidth * 0.045),
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(height: screenHeight * 0.04),
                 ],
               ),
             ),
@@ -135,11 +176,11 @@ class _AlumniInformationState extends State<AlumniInformation> {
     );
   }
 
-  Widget _infoItem(IconData icon, String label, String? value, {Color textColor = Colors.white}) {
+  Widget _infoItem(IconData icon, String label, String? value, {Color textColor = Colors.white, double fontSize = 16}) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, color: Colors.blueAccent, size: 26),
+        Icon(icon, color: Colors.blueAccent, size: fontSize + 6),
         const SizedBox(width: 14),
         Expanded(
           child: Column(
@@ -147,8 +188,8 @@ class _AlumniInformationState extends State<AlumniInformation> {
             children: [
               Text(
                 label,
-                style: const TextStyle(
-                  fontSize: 16,
+                style: TextStyle(
+                  fontSize: fontSize - 2,
                   color: Colors.white54,
                   fontWeight: FontWeight.bold,
                 ),
@@ -157,7 +198,7 @@ class _AlumniInformationState extends State<AlumniInformation> {
               Text(
                 value ?? '-',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: fontSize,
                   color: textColor,
                   fontWeight: FontWeight.w500,
                 ),
