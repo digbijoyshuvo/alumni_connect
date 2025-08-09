@@ -143,7 +143,7 @@ class _AlumniDirectoryState extends State<AlumniDirectory> {
                       Color(0xFF0083B0), // deep teal
                     ],
                     onTap: () {
-                      context.pushNamed(RouteNames.jobOffersPage);
+                      context.pushNamed(RouteNames.addJobOffer);
                     },
                     icon: Icons.work_outline,
                   ),

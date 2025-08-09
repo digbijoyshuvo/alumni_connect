@@ -76,55 +76,19 @@ class _ProfilePageState extends State<ProfilePage> {
             const SizedBox(height: 20),
 
             // Profile Image with Edit Button
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  width: 120,
-                  height: 120,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: LinearGradient(
-                      colors: [Color(0xFFA8E063), Color(0xFF56AB2F)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                  ),
-                ),
-                Container(
-                  width: 110,
-                  height: 110,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF121212),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-                const CircleAvatar(
-                  radius: 50,
-                  backgroundImage: AssetImage('assets/profile.jpg'), // replace with dynamic image
-                ),
-                Positioned(
-                  bottom: 8,
-                  right: 10,
-                  child: GestureDetector(
-                    onTap: () {
-                      // Handle image update
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(6),
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color(0xFF1A1A1A),
-                      ),
-                      child: const Icon(
-                        Icons.edit,
-                        size: 16,
-                        color: Colors.white70,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+            // Simple Demo Profile Icon
+            Container(
+              width: 100,
+              height: 100,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Color(0xFF1F1F1F),
+              ),
+              child: const Icon(
+                Icons.person,
+                size: 60,
+                color: Colors.white70,
+              ),
             ),
 
             const SizedBox(height: 10),

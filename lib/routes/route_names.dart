@@ -16,5 +16,6 @@ static const searchAlumni = "searchAlumni";
 static const searchBySeries = "searchBySeries";
 static const resourcePage = "resourcePage";
 static const jobOffersPage = "jobOffersPage";
+static const addJobOffer = "addJobOffer";
 
 }

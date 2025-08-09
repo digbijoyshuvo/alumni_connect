@@ -2,6 +2,7 @@ import 'package:alumni_connect/features/auth/login_view.dart';
 import 'package:alumni_connect/features/auth/register_view.dart';
 import 'package:alumni_connect/features/homepage/home_page.dart';
 import 'package:alumni_connect/features/homepagefeatures/Joboffers/addjobpage.dart';
+import 'package:alumni_connect/features/homepagefeatures/Joboffers/jobpage.dart';
 import 'package:alumni_connect/features/homepagefeatures/alumnimanagementsection/create_alumni_account.dart';
 import 'package:alumni_connect/features/homepagefeatures/alumnimanagementsection/update_alumni_page.dart';
 import 'package:alumni_connect/features/homepagefeatures/eventPage/check_permission.dart';
@@ -110,8 +111,13 @@ final GoRouter router = GoRouter(routes: [
         builder: (context,state) => const ResourcePage(),
     ),
     GoRoute(
+        name:RouteNames.addJobOffer,
+        path: "/addJobOffer",
+        builder: (context,state) => const AddJobPage(),
+    ),
+    GoRoute(
         name:RouteNames.jobOffersPage,
         path: "/jobOffersPage",
-        builder: (context,state) => const AddJobPage(),
+        builder: (context,state) => const JobPage(),
     ),
 ]);

@@ -104,6 +104,8 @@ class _JoinOurCommunityState extends State<JoinOurCommunity> {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 10),
+                Divider(thickness: 2),
+                SizedBox(height: 20),
                 GestureDetector(
                   onTap:()=> _openFilePicker(),
                   child: Container(width: double.infinity,height: MediaQuery.of(context).size.height*.25,

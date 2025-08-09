@@ -32,3 +32,13 @@ Future<void> addJobOffer(
       }).then((value) => print("Job Offer added"))
       .catchError((ex) => print(ex));
 }
+
+Future getAllJobOffers() async {
+  try {
+    final data = await databases.listDocuments(
+        databaseId: databaseId, collectionId: jobOfferId);
+    return data.documents;
+  } catch (ex) {
+    print(ex);
+  }
+}
